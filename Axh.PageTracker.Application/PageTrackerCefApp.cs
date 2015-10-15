@@ -60,12 +60,11 @@
         public int Initialize(bool isSubProcess, params string[] args)
         {
             var path = AppDomain.CurrentDomain.BaseDirectory;
-            var binPath = isSubProcess ? path : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin");
-            var cefPath = Path.Combine(binPath, "CefBinaries");
+            var binPath = isSubProcess ? path : Path.Combine(path, "bin");
 
-            loggingService.Debug("[Initialize] cefPath: {0}", cefPath);
+            loggingService.Debug("[Initialize] cefPath: {0}", binPath);
 
-            CefRuntime.Load(cefPath);
+            CefRuntime.Load(binPath);
 
             loggingService.Debug("[Initialize] Cef binaries found");
 
@@ -89,7 +88,7 @@
                 IgnoreCertificateErrors = true,
                 PersistSessionCookies = false,
                 BrowserSubprocessPath = Path.Combine(binPath, "Axh.PageTracker.SubProcess.exe"),
-                LocalesDirPath = Path.Combine(cefPath, "locales"),
+                LocalesDirPath = Path.Combine(binPath, "locales"),
                 Locale = "en-GB",
                 LogFile = "C:\\Temp\\Cef.log"
             };
